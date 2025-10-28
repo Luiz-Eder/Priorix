@@ -16,7 +16,6 @@ namespace Priorix.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Relação User → Task
             modelBuilder.Entity<User>()
                 .HasKey(u => u.Id);
 
@@ -25,7 +24,6 @@ namespace Priorix.Data.Context
                 .WithOne(t => t.ResponsibleUser)
                 .HasForeignKey(t => t.ResponsibleUserId);
 
-            // Relação Status → Task
             modelBuilder.Entity<Statuses>()
                 .HasKey(s => s.Id);
 
@@ -34,7 +32,6 @@ namespace Priorix.Data.Context
                 .WithOne(t => t.Statuses)
                 .HasForeignKey(t => t.StatusId);
 
-            // Relação Task → Metrics / History
             modelBuilder.Entity<TaskEntity>()
                 .HasKey(t => t.Id);
 
