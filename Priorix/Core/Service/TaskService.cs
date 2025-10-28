@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Priorix.Core.Entities;
 using Priorix.Core.Interfaces.Repositories;
@@ -16,13 +16,10 @@ namespace Priorix.Core.Services
             _taskRepository = taskRepository;
         }
 
-        // ✅ Retorna uma lista da entidade Task (não System.Threading.Tasks.Task)
         public IEnumerable<TaskEntity> GetAllTasks() => _taskRepository.GetAll();
 
-        // ✅ Busca uma task específica
         public TaskEntity GetTaskById(int id) => _taskRepository.GetById(id);
 
-        // ✅ Cria uma nova task
         public void CreateTask(TaskEntity task)
         {
             if (task == null)
@@ -31,7 +28,6 @@ namespace Priorix.Core.Services
             _taskRepository.Add(task);
         }
 
-        // ✅ Atualiza uma task existente
         public void UpdateTask(TaskEntity task)
         {
             if (task == null)
@@ -40,20 +36,9 @@ namespace Priorix.Core.Services
             _taskRepository.Update(task);
         }
 
-        // ✅ Deleta uma task pelo ID
         public void DeleteTask(int id)
         {
             _taskRepository.Delete(id);
-        }
-
-        IEnumerable<System.Threading.Tasks.Task> ITaskService.GetAllTasks()
-        {
-            throw new NotImplementedException();
-        }
-
-        System.Threading.Tasks.Task ITaskService.GetTaskById(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public void CreateTask(System.Threading.Tasks.Task task)
