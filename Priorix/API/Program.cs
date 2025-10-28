@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Priorix.Core.Interfaces.Repositories;
 using Priorix.Core.Interfaces.Services;
 using Priorix.Core.Services;
@@ -27,7 +27,7 @@ builder.Services.AddTransient<ITaskHistoryRepository, TaskHistoryRepository>();
 builder.Services.AddTransient<IPriorizationMetricsRepository, PriorizationMetricsRepository>();
 
 // Banco de Dados
-string connectionString = builder.Configuration.GetConnectionString("Default");
+string connectionString = builder.Configuration.GetConnectionString(name: """Default""");
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
 );
