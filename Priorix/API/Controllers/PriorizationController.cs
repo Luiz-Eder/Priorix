@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Priorix.Core.Interfaces.Services;
 using Priorix.Core.Entities;
-using Priorix.Application.Dtos; // Importe o DTO
+using Priorix.Application.Dtos; 
 
 namespace Priorix.Api.Controllers
 {
@@ -17,7 +17,6 @@ namespace Priorix.Api.Controllers
         }
 
         [HttpPost("calculate")]
-        // 1. Corrigido: Recebe o DTO, não a Entidade
         public IActionResult Calculate([FromBody] RiceInputDto input)
         {
             if (input == null)
@@ -25,13 +24,11 @@ namespace Priorix.Api.Controllers
 
             try
             {
-                // 2. Corrigido: Apenas passa o DTO para o serviço
                 var result = _priorizationService.CalculateAndSaveMetrics(input);
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                // Retorna um erro caso o serviço falhe (ex: TaskId não existe)
                 return StatusCode(500, ex.Message);
             }
         }
