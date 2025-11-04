@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Priorix.Core.Entities
 {
@@ -8,7 +8,7 @@ namespace Priorix.Core.Entities
         public int TaskId { get; set; }
 
         [ForeignKey("TaskId")]
-        public Task? Task { get; set; }  // 🔹 agora é opcional (nullable)
+        public Task? Task { get; set; } 
 
         public double Reach { get; set; }
         public double Impact { get; set; }
@@ -18,7 +18,7 @@ namespace Priorix.Core.Entities
 
         public void CalculateAndSetRiceScore()
         {
-            if (Effort <= 0) Effort = 1; // evita divisão por zero
+            if (Effort <= 0) Effort = 1; 
             RiceScore = (Reach * Impact * Confidence) / Effort;
         }
     }
