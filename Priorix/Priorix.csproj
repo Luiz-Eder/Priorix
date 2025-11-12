@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Core\DTOs\**" />
+    <Compile Remove="Data\Migrations\**" />
+    <Content Remove="Core\DTOs\**" />
+    <Content Remove="Data\Migrations\**" />
+    <EmbeddedResource Remove="Core\DTOs\**" />
+    <EmbeddedResource Remove="Data\Migrations\**" />
+    <None Remove="Core\DTOs\**" />
+    <None Remove="Data\Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="API\Apllication\DTOs\LoginRequestDtio.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="DB_Priorix.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Api.Gax.Grpc" Version="4.12.1" />
+    <PackageReference Include="Google.Cloud.AIPlatform.V1" Version="3.55.0" />
+    <PackageReference Include="Grpc.Auth" Version="2.71.0" />
+    <PackageReference Include="Grpc.Core" Version="2.46.6" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.71.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+</Project>
