@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Priorix.Core.Entities;
 using Priorix.Core.Interfaces.Services;
+<<<<<<< HEAD
 using Priorix.Application.Dtos; // 👈 1. ADICIONE A IMPORTAÇÃO DO DTO
+=======
+>>>>>>> 8e90a372d2359bc509180117527eed62a8603956
 
 namespace Priorix.Api.Controllers
 {
@@ -16,6 +19,7 @@ namespace Priorix.Api.Controllers
             _service = service;
         }
 
+<<<<<<< HEAD
         // 
         // ✅ 2. ADICIONE O MÉTODO DE LOGIN ABAIXO
         //
@@ -48,6 +52,9 @@ namespace Priorix.Api.Controllers
         // --- SEUS MÉTODOS CRUD EXISTENTES (Mantidos) ---
 
         [HttpGet]
+=======
+        [HttpGet]
+>>>>>>> 8e90a372d2359bc509180117527eed62a8603956
         public IActionResult GetUsers() => Ok(_service.GetUsers());
 
         [HttpGet("{id}")]
@@ -94,4 +101,8 @@ namespace Priorix.Api.Controllers
             return Ok(exists);
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 8e90a372d2359bc509180117527eed62a8603956

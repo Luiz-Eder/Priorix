@@ -25,7 +25,10 @@ namespace Priorix.Data.Context
                 .HasMany(u => u.Tasks)
                 .WithOne(t => t.ResponsibleUser)
                 .HasForeignKey(t => t.ResponsibleUserId)
+<<<<<<< HEAD
                 .IsRequired(false) // 🔹 Agora o User é opcional
+=======
+>>>>>>> 8e90a372d2359bc509180117527eed62a8603956
                 .OnDelete(DeleteBehavior.Restrict);
 
             // --- Status ---
@@ -36,7 +39,10 @@ namespace Priorix.Data.Context
                 .HasMany(s => s.Tasks)
                 .WithOne(t => t.Status)
                 .HasForeignKey(t => t.StatusId)
+<<<<<<< HEAD
                 .IsRequired(false) // 🔹 Agora o Status é opcional
+=======
+>>>>>>> 8e90a372d2359bc509180117527eed62a8603956
                 .OnDelete(DeleteBehavior.Restrict);
 
             // --- Task ---

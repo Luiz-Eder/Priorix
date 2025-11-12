@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿using Microsoft.AspNetCore.Mvc;
+=======
+using Microsoft.AspNetCore.Mvc;
+>>>>>>> 8e90a372d2359bc509180117527eed62a8603956
 using Priorix.Core.Interfaces.Services;
 using TaskEntity = Priorix.Core.Entities.Task;
 
@@ -15,6 +19,7 @@ namespace Priorix.Api.Controllers
             _taskService = taskService;
         }
 
+<<<<<<< HEAD
         // ✅ GET /api/task
         [HttpGet]
         public IActionResult GetAll()
@@ -124,6 +129,42 @@ namespace Priorix.Api.Controllers
                     inner = ex.InnerException?.Message
                 });
             }
+=======
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var tasks = _taskService.GetAllTasks();
+            return Ok(tasks);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var task = _taskService.GetTaskById(id);
+            if (task == null) return NotFound();
+            return Ok(task);
+        }
+
+        [HttpPost]
+        public IActionResult Create([FromBody] TaskEntity task)
+        {
+            _taskService.CreateTask(task);
+            return Ok(task);
+        }
+
+        [HttpPut]
+        public IActionResult Update([FromBody] TaskEntity task)
+        {
+            _taskService.UpdateTask(task);
+            return Ok(task);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _taskService.DeleteTask(id);
+            return Ok();
+>>>>>>> 8e90a372d2359bc509180117527eed62a8603956
         }
     }
 }
