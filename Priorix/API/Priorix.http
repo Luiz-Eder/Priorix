@@ -1,0 +1,6 @@
+@Priorix_HostAddress = http://localhost:5232
+
+GET {{Priorix_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
