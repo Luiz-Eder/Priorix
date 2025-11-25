@@ -27,7 +27,7 @@ builder.Services.AddTransient<ITaskHistoryRepository, TaskHistoryRepository>();
 builder.Services.AddTransient<IPriorizationMetricsRepository, PriorizationMetricsRepository>();
 
 // ✅ Serviço de IA (Gemini)
-var geminiApiKey = "AIzaSyAXayfOAfp0NL9pxDJGykrC38aIO8h8C6g";
+var geminiApiKey = "Chave";
 builder.Services.AddSingleton(new GeminiService(geminiApiKey));
 
 // ✅ Banco de dados SQLite local
