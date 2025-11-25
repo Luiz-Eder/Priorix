@@ -18,24 +18,39 @@ namespace Priorix.Core.Services
 
         public async Task<string> AnalyzeTaskAsync(string title, string description)
         {
-            // ✅ Endpoint atualizado do Gemini 2.0 Flash
-            var endpoint =
-                $"https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key={_apiKey}";
+            // ✅ Endpoint do Gemini 2.0 Flash
+            var endpoint = $"https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key={_apiKey}";
 
-            // ✅ Prompt melhorado
+            // ✅ Prompt OTIMIZADO COM PRIORIDADE
             var prompt = @$"
-Você é uma IA que analisa tarefas de desenvolvimento usando critérios RICE.
+Aja como um Product Owner experiente. Sua missão é reescrever a tarefa abaixo de forma profissional, clara e direta.
 
-Aqui está a tarefa:
-
+Entrada:
 Título: {title}
-Descrição: {description}
+Descrição original: {description}
 
- Gere:
- - Análise detalhada
- - Pontuação RICE estimada (Reach, Impact, Confidence, Effort)
- - Cálculo final
- - Sua conclusão final
+REGRAS DE FORMATAÇÃO (OBRIGATÓRIO):
+1. NÃO use negrito (**), itálico (*) ou qualquer marcação Markdown.
+2. NÃO use introduções como 'Aqui está a sugestão' ou 'Com base na análise'.
+3. O texto deve ser breve, ideal para ser lido rapidamente em um card Kanban.
+
+ESTRUTURA DA RESPOSTA:
+[Parágrafo único com a descrição da tarefa, focando no objetivo e critério de aceitação]
+
+Prioridade Sugerida: [Baixa / Média / Alta]
+
+[Linha em branco]
+
+RICE Score Estimado:
+Alcance: [Número]
+Impacto: [Número]
+Confiança: [Percentual]
+Esforço: [Número]
+Score Final: [Resultado]
+
+[Linha em branco]
+
+Justificativa: [Uma frase  explicando a prioridade]
 ";
 
             var requestBody = new
@@ -62,20 +77,26 @@ Descrição: {description}
             var json = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
-                return $"Erro Gemini: {json}";
+                return $"Erro na API Gemini: {json}";
 
-            // ✅ Extração segura do texto
-            using var doc = JsonDocument.Parse(json);
+            // ✅ Extração segura com try-catch
+            try
+            {
+                using var doc = JsonDocument.Parse(json);
 
-            var text =
-                doc.RootElement
-                .GetProperty("candidates")[0]
-                .GetProperty("content")
-                .GetProperty("parts")[0]
-                .GetProperty("text")
-                .GetString();
+                var text = doc.RootElement
+                    .GetProperty("candidates")[0]
+                    .GetProperty("content")
+                    .GetProperty("parts")[0]
+                    .GetProperty("text")
+                    .GetString();
 
-            return text ?? "Nenhuma resposta da IA.";
+                return text ?? "A IA não retornou texto.";
+            }
+            catch
+            {
+                return "Não foi possível processar a resposta da IA (formato inválido ou bloqueio de segurança).";
+            }
         }
     }
 }

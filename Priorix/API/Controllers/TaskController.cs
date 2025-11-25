@@ -58,7 +58,9 @@ namespace Priorix.Api.Controllers
             }
         }
 
-        // ✅ POST /api/task
+        // ✅ POST /api/task (VERSÃO BLINDADA)
+        // Substitua o método Create antigo por este:
+        // POST: api/Task
         [HttpPost]
         public IActionResult Create([FromBody] TaskEntity task)
         {
@@ -67,23 +69,40 @@ namespace Priorix.Api.Controllers
                 if (task == null)
                     return BadRequest(new { message = "O corpo da requisição está vazio." });
 
+                // --- CORREÇÃO DE DADOS (BLINDAGEM) ---
+
+                // 1. Se o Usuário for 0 (erro do front), forçamos NULL
+                if (task.ResponsibleUserId == 0)
+                {
+                    task.ResponsibleUserId = null;
+                }
+
+                // 2. Se a Prioridade for 0, forçamos 1 (Baixa)
+                if (task.Priority == 0)
+                {
+                    task.Priority = 1;
+                }
+
+                // 3. Garante que o ID da tarefa seja 0 para o banco criar um novo
+                task.Id = 0;
+                // -------------------------------------
+
                 _taskService.CreateTask(task);
                 return Ok(task);
             }
             catch (Exception ex)
             {
-                // 🔎 Retorna detalhes completos do erro (para debug local)
+                // Este log vai te mostrar o erro exato no console do navegador
                 return StatusCode(500, new
                 {
-                    message = "Erro ao criar tarefa.",
-                    detail = ex.Message,
-                    inner = ex.InnerException?.Message,
-                    stack = ex.StackTrace
+                    message = "Erro interno ao salvar tarefa.",
+                    error = ex.Message,
+                    innerError = ex.InnerException?.Message
                 });
             }
         }
 
-        // ✅ PUT /api/task
+        // ✅ PUT /api/task (VERSÃO BLINDADA)
         [HttpPut]
         public IActionResult Update([FromBody] TaskEntity task)
         {
@@ -91,6 +110,29 @@ namespace Priorix.Api.Controllers
             {
                 if (task == null)
                     return BadRequest(new { message = "O corpo da requisição está vazio." });
+
+                // --- PROTEÇÃO CONTRA DADOS INVÁLIDOS (IGUAL AO CREATE) ---
+
+                // 1. Se vier Usuário 0, força NULL
+                if (task.ResponsibleUserId == 0)
+                {
+                    task.ResponsibleUserId = null;
+                }
+
+                // 2. Se vier Prioridade 0, força 1 (Baixa)
+                if (task.Priority == 0)
+                {
+                    task.Priority = 1;
+                }
+
+                // 3. Proteção Extra: Status nunca pode ser 0
+                if (task.StatusId == 0)
+                {
+                    // Se por algum milagre vier 0, retorna erro ou define um padrão.
+                    // Aqui vamos assumir erro, pois tarefa sem status no Kanban é grave.
+                    return BadRequest(new { message = "A tarefa precisa ter um Status válido." });
+                }
+                // ---------------------------------------
 
                 _taskService.UpdateTask(task);
                 return Ok(task);

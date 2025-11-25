@@ -31,7 +31,7 @@ var geminiApiKey = "AIzaSyAXayfOAfp0NL9pxDJGykrC38aIO8h8C6g";
 builder.Services.AddSingleton(new GeminiService(geminiApiKey));
 
 // ✅ Banco de dados SQLite local
-var connectionString = "Data Source=DB_Priorix.db;";
+var connectionString = "Data Source=DB_Priorix_v3.db;";
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlite(connectionString)
 );
