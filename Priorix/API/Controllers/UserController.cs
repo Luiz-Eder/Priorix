@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Priorix.Core.Entities;
 using Priorix.Core.Interfaces.Services;
-using Priorix.Application.Dtos; // 👈 1. ADICIONE A IMPORTAÇÃO DO DTO
+using Priorix.Application.Dtos;
 
 namespace Priorix.Api.Controllers
 {
@@ -16,26 +16,20 @@ namespace Priorix.Api.Controllers
             _service = service;
         }
 
-        // 
-        // ✅ 2. ADICIONE O MÉTODO DE LOGIN ABAIXO
-        //
+
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequestDto loginDto)
         {
             try
             {
-                // 1. Busca o usuário pelo email
+
                 var user = _service.GetUserByEmail(loginDto.Email);
 
-                // 2. Verifica se o usuário existe E se a senha bate
-                // ⚠️ ATENÇÃO: Esta é uma verificação INSEGURA (texto puro)
-                // Para produção, use Hashing (ex: BCrypt.Net)
                 if (user == null || user.Password != loginDto.Password)
                 {
                     return Unauthorized("Email ou senha inválidos.");
                 }
 
-                // 3. Sucesso: Retorna o objeto do usuário
                 return Ok(user);
             }
             catch (Exception ex)
@@ -44,8 +38,6 @@ namespace Priorix.Api.Controllers
             }
         }
 
-
-        // --- SEUS MÉTODOS CRUD EXISTENTES (Mantidos) ---
 
         [HttpGet]
         public IActionResult GetUsers() => Ok(_service.GetUsers());
