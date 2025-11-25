@@ -168,7 +168,7 @@ O `DatabaseSeeder` cria dados iniciais como:
 
 1. Clone o repositório:
 ```sh
-git clone https://github.com/SeuUsuario/Priorix.git
+git clone https://github.com/Luiz-Eder/Priorix
 
 Entre na pasta:
 cd Priorix
